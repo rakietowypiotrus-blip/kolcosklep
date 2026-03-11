@@ -68,8 +68,8 @@ margin-top:40px;
 <body>
 
 <header>
-#<div class="logo">🐡 Kolcosklep</div>
-<img src="https://chatgpt.com/backend-api/estuary/content?id=file_0000000078e8720a88bf59978719bf96&ts=492564&p=fs&cid=1&sig=94e644d26d09a80c63eccdfa0c09a75bbdc8c19eb6d2e91796bfebdf3b620414&v=0">
+<div class="logo">🐡 Kolcosklep</div>
+<img src="https://media.canva.com/v2/image-resize/format:PNG/height:366/quality:100/uri:ifs%3A%2F%2FM%2F53a20cbf-3a95-4d6b-8d2a-026e712bd2d1/watermark:F/width:550?csig=AAAAAAAAAAAAAAAAAAAAAAcKpvU2bLEi8szbnvtLl1sgdR1u5qLfo0DEtt8Yonab&exp=1773248976&osig=AAAAAAAAAAAAAAAAAAAAAALn-zzTu_3Q4Ex1ygnoQYO9fcG08NGrYPE_3NRTeNM4&signer=media-rpc&x-canva-quality=thumbnail_large">
 <p>Wszystko o kolcobrzuchu karłowatym</p>
 </header>
 
@@ -109,12 +109,220 @@ Jest bardzo inteligentną rybą i potrafi rozpoznawać swojego opiekuna.
 <p>
 Kolcobrzuch potrafi nadmuchać swoje ciało jak balon,
 aby odstraszyć drapieżniki.
-</p>
 
+</p>
+<section class="ciekawostki">
+
+<h2>🐡 Ciekawostki o kolcobrzuchu karłowatym</h2>
+
+<ul>
+
+<li>
+<strong>Bardzo inteligentna ryba</strong><br>
+Kolcobrzuchy karłowate potrafią rozpoznawać swojego opiekuna i podpływają do szyby, gdy widzą osobę, która je karmi.
+</li>
+
+<br>
+
+<li>
+<strong>Uwielbiają ślimaki</strong><br>
+Ich ulubionym pokarmem są małe ślimaki akwariowe, które potrafią łatwo rozgryzać swoimi mocnymi zębami.
+</li>
+
+<br>
+
+<li>
+<strong>Potrafią się nadmuchać</strong><br>
+Gdy czują zagrożenie, nabierają wody i powiększają swoje ciało jak balon, aby odstraszyć drapieżniki.
+</li>
+
+<br>
+
+<li>
+<strong>Jedne z najmniejszych kolcobrzuchów</strong><br>
+Dorosłe osobniki osiągają tylko około 2–3 cm długości.
+</li>
+
+<br>
+
+<li>
+<strong>Niezależnie poruszają oczami</strong><br>
+Ich oczy mogą patrzeć w różne strony jednocześnie, podobnie jak u kameleona.
+</li>
+
+</ul>
+
+</section>
+<style>
+.ciekawostki{
+max-width:800px;
+margin:auto;
+font-family:Arial;
+line-height:1.6;
+}
+
+.ciekawostki li{
+margin-bottom:20px;
+}
+</style>
 </div>
 
 <footer>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Kolcosklep - Gra</title>
 
+<style>
+
+body{
+text-align:center;
+font-family:Arial;
+background:#cfefff;
+}
+
+#game{
+width:600px;
+height:400px;
+background:#aee4ff;
+margin:auto;
+border:4px solid #333;
+position:relative;
+overflow:hidden;
+}
+
+#fish{
+position:absolute;
+font-size:40px;
+left:280px;
+top:180px;
+}
+
+.snail{
+position:absolute;
+font-size:30px;
+}
+
+#score{
+font-size:22px;
+margin:10px;
+}
+
+#controls{
+margin-top:20px;
+}
+
+button{
+font-size:25px;
+padding:10px 20px;
+margin:5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🐡 Zbieraj ślimaki!</h1>
+
+<div id="score">Punkty: 0</div>
+
+<div id="game">
+<div id="fish">🐡</div>
+</div>
+
+<div id="controls">
+
+<div>
+<button onclick="move('up')">⬆️</button>
+</div>
+
+<div>
+<button onclick="move('left')">⬅️</button>
+<button onclick="move('down')">⬇️</button>
+<button onclick="move('right')">➡️</button>
+</div>
+
+</div>
+
+<script>
+
+let fish = document.getElementById("fish")
+let game = document.getElementById("game")
+let scoreText = document.getElementById("score")
+
+let x = 280
+let y = 180
+let speed = 20
+let score = 0
+
+function move(direction){
+
+if(direction === "up") y -= speed
+if(direction === "down") y += speed
+if(direction === "left") x -= speed
+if(direction === "right") x += speed
+
+fish.style.left = x + "px"
+fish.style.top = y + "px"
+
+checkSnail()
+
+}
+
+document.addEventListener("keydown", function(e){
+
+if(e.key === "ArrowUp") move("up")
+if(e.key === "ArrowDown") move("down")
+if(e.key === "ArrowLeft") move("left")
+if(e.key === "ArrowRight") move("right")
+
+})
+
+function createSnail(){
+
+let snail = document.createElement("div")
+snail.className = "snail"
+snail.innerHTML = "🐌"
+
+snail.style.left = Math.random()*560 + "px"
+snail.style.top = Math.random()*360 + "px"
+
+game.appendChild(snail)
+
+}
+
+function checkSnail(){
+
+let snails = document.querySelectorAll(".snail")
+
+snails.forEach(snail =>{
+
+let sx = snail.offsetLeft
+let sy = snail.offsetTop
+
+if(Math.abs(x - sx) < 30 && Math.abs(y - sy) < 30){
+
+snail.remove()
+
+score++
+scoreText.innerHTML = "Punkty: " + score
+
+createSnail()
+
+}
+
+})
+
+}
+
+createSnail()
+
+</script>
+
+</body>
+</html>
 <p>© 2026 Kolcosklep</p>
 <p>www.kolcosklep.com</p>
 
@@ -122,3 +330,4 @@ aby odstraszyć drapieżniki.
 
 </body>
 </html>
+
